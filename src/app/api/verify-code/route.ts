@@ -3,15 +3,33 @@ import dbConnect from "@/lib/dbConnect";
 import { z } from "zod";
 import { verifySchema } from "@/schemas/verifySchema";
 
-const VerifyCodeQuerySchema = z.object({
-  verifyCode: verifySchema,
-});
 
 export async function POST(request: Request) {
   await dbConnect();
 
   try {
     const { username, code } = await request.json();
+
+    // Validate with zod
+    const result = verifySchema.safeParse({ code: code });
+    console.log(result); // TODO: remove
+
+    if (!result.success) {
+      const codeErrors = result.error.format().code?._errors || [];
+      return Response.json(
+        {
+          success: false,
+          message:
+            codeErrors?.length > 0
+              ? codeErrors.join(", ")
+              : "Invalid code value",
+        },
+        { status: 400 }
+      );
+    }
+
+    const { code: verificationCode } = result.data;
+    
 
     const decodedUsername = decodeURIComponent(username); // For checking uri
     const user = await User.findOne({
