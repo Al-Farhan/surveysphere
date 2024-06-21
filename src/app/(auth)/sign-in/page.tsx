@@ -8,6 +8,7 @@ import { useState } from "react"
 const SiginInPage = () => {
   const [username, setUsername] = useState('');
   const [usernameMessage, setUsernameMessage] = useState('');
+  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   return (
     <div>SiginInPage</div>
   )
