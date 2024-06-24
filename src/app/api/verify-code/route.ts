@@ -27,14 +27,14 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-    const { code: verificationCode } = result.data;
     
 
     const decodedUsername = decodeURIComponent(username); // For checking uri
     const user = await User.findOne({
         username: decodedUsername
     });
+
+    //TODO: check if user is already verified
 
     if (!user) {
         return Response.json({
