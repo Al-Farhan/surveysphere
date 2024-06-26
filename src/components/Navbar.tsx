@@ -18,7 +18,7 @@ const Navbar = () => {
         {session ? (
           <>
             <span className="mr-4">
-              Welcome, {user?.username} || {user?.email}{" "}
+              Welcome, {user?.username}
             </span>
             <Button className="w-full md:w-auto" onClick={() => signOut()}>Logout</Button>
           </>
