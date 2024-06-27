@@ -72,6 +72,10 @@ const SiginInPage = () => {
     }
 
     if (result?.url) {
+      toast({
+        title: "Login successful",
+        
+      })
       router.replace("/dashboard");
     }
   };
